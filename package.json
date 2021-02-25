@@ -1,0 +1,25 @@
+{
+  "name": "static-site",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^6.5.2",
+    "statuses": "^2.0.1"
+  },
+  "description": "",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reybrac/Readme_generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/reybrac/Readme_generator/issues"
+  },
+  "homepage": "https://github.com/reybrac/Readme_generator#readme",
+  "keywords": []
+}
