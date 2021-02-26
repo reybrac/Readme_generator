@@ -1,128 +1,93 @@
-// TODO: Include packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
 
-const {message} = require('statuses');
-// TODO: Create an array of questions for user input
-//const questions = [];
-inquirer.prompt(
-    [
+const generateReadme = (data) =>
+`
+# ***${data.name}***
+
+## Table of Contents
+1. [Project description](#Project-description)
+2. [Istallation instruction](#Installaton-instructions)
+3. [Usage information](#Usage-information)
+4. [Contribution guidelines](#Contribution-guidelines)
+5. [Test instructions](#Test-instructions)
+6. [License](#License)
+7. [Questions](#Questions)
+
+## Project description: 
+${data.description}
+
+## Installation instructions: 
+${data.installation}
+## Usage information: 
+${data.usage}
+## Contribution guidelines: 
+${data.contribution}
+## Test instructions: 
+${data.test}
+## License: 
+${data.license}
+## Questions: 
+https://www.github.com/${data.github}
+
+Reach me at ${data.email} for additional questions
+`
+
+inquirer
+    .prompt([
         {
             type: 'input',
-            message:"What is the project title?",
-            name: 'title',
-            //validate property to check that the user provided a value
-            validate: (value)=>{if(value){return true} else {return 'i need a value to continue'}},
+            name: 'name',
+            message: 'Enter project title'
         },
         {
             type: 'input',
-            message:'how do you install your app?',
+            name: 'description',
+            message: 'Describe your project'
+        },
+        {
+            type: 'input',
             name: 'installation',
-            //validate property to check that the user provided a value
-            validate: (value)=>{if(value){return true} else {return 'i need a value to continue'}},
+            message: 'Provide installation instructions'
         },
         {
             type: 'input',
-            message:'instruction to be followed?',
-            name: 'instructions',
-            //validate property to check that the user provided a value
-            validate: (value)=>{if(value){return true} else {return 'i need a value to continue'}},
-        },
-        {
-            type: 'input',
-            message:'any credits?',
-            name: 'credits',
-            //validate property to check that the user provided a value
-            validate: (value)=>{if(value){return true} else {return 'i need a value to continue'}},
-        },
-        {
-            type: 'input',
-            message:'how do you use your app?',
             name: 'usage',
-            //validate property to check that the user provided a value
-            validate: (value)=>{if(value){return true} else {return 'i need a value to continue'}},
+            message: 'Describe usage of project'
         },
         {
-            // list of license
+            type: 'input',
+            name: 'contribution',
+            message: 'Contributions to project'
+        },
+        {
+            type: 'input',
+            name: 'test',
+            message: 'Provide test instructions'
+        },
+        {
             type: 'list',
-            message:'what license did you use?',
             name: 'license',
-            choices:["The MIT license", "The GPL license", "Apache license", "GNU license", "N/A"],
-
-            //validate property to check that the user provided a value
-            validate: (value)=>{if(value){return true} else {return 'i need a value to continue'}},
+            message: 'What license did you use?',
+            choices: ['MIT', 'Apache', 'Boost', 'BSD', 'Eclipse', 'GNU', 'IBM', 'ISC', 'Mozilla']
         },
         {
             type: 'input',
-            message:'Github username?',
-            name: 'git',
-            //validate property to check that the user provided a value
-            validate: (value)=>{if(value){return true} else {return 'i need a value to continue'}},
+            name: 'github',
+            message: 'Enter you Github username'
         },
         {
             type: 'input',
-            message: 'Email:',
             name: 'email',
-            validate: (value)=>{if(value){return true} else {return 'i need a value to continue'}},
+            message: 'Enter your email address'
         }
-    ]
-).then(({
-    title,
-    installation,
-    instructions,
-    credit,
-    license,
-    git,
-    linkedin,
-    email,
-    usage,
-    contribution
-})=>{
-    const template = `# ${title}
+    ])
+    .then((data) => {
+        
+        const readMePageContent = generateReadme(data);
+        fs.writeFile(`README.md`, readMePageContent, (err) =>
+        err ? console.log(err) : console.log('successfully created README.md')
+        );
+    });
+
     
-    * [Installation](#installation)
-    * [Usage](#usage)
-    * [Contribution](#contribution)
-    * [Credits](#credits)
-    * [License]{#license}
-    * Installation
-    ${installation}
-    ## Usage
-    ${usage}
-    ## Contribution
-    ${contribution}
-    ### instructions
-    ${instructions}
-    ## Credits
-    ${credit}
-    ## License
-    ${license}
-
-    * Contact
-    * GitHub :${git}
-    * Linkedin :${linkedin}
-    * E-mail :${email}`;
-    //Function to create our readme using fs
-    createNewFile(title, template);
-}
-);
-
-function createNewFile(fileName,data){
-    fs.writeFile(`./${fileName.toLowerCase().split(' ').join('')}.md`,data,(err)=>{
-        if(err){
-            console.log(err)
-        }
-        console.log('Your REAME has been generated');
-    })
-}
-
-
-
-// TODO: Create a function to write README file
-// function writeToFile(fileName, data) {}
-
-// TODO: Create a function to initialize app
-// function init() {}
-
-// Function call to initialize app
-// init();
