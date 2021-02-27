@@ -2,8 +2,10 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 
 const generateReadme = (data) =>
-`
-# ***${data.name}***
+
+`#${data.name}
+
+${data.license} ${data.badge}
 
 ## Table of Contents
 1. [Project description](#Project-description)
@@ -26,7 +28,7 @@ ${data.contribution}
 ## Test instructions: 
 ${data.test}
 ## License: 
-${data.license}
+This application is covered under the ${data.license} license.
 ## Questions: 
 https://www.github.com/${data.github}
 
@@ -69,12 +71,13 @@ inquirer
             type: 'list',
             name: 'license',
             message: 'What license did you use?',
-            choices: ['MIT', 'Apache', 'Boost', 'BSD', 'Eclipse', 'GNU', 'IBM', 'ISC', 'Mozilla']
+            choices: ['MIT', 'Apache', 'Boost', 'Eclipse', 'GNU', 'IBM', 'ISC', 'Mozilla']
         },
         {
             type: 'input',
             name: 'github',
-            message: 'Enter you Github username'
+            message: 'Enter you Github username',
+            
         },
         {
             type: 'input',
@@ -84,10 +87,41 @@ inquirer
     ])
     .then((data) => {
         
+        
+        switch (data.license) {
+            case 'MIT':
+                data.badge = "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)";
+              break;
+            case 'Apache':
+                data.badge = "[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)";
+              break;
+            case 'boost':
+                data.badge = "[![License](https://img.shields.io/badge/License-Boost%201.0-lightblue.svg)](https://www.boost.org/LICENSE_1_0.txt)";
+              break;
+            case 'Eclipse':
+                data.badge = "[![License](https://img.shields.io/badge/License-EPL%201.0-red.svg)](https://opensource.org/licenses/EPL-1.0)";
+              break;
+            case 'GNU':
+                data.badge = "[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)";
+              break;
+            case 'IBM':
+                data.badge = "[![License: IPL 1.0](https://img.shields.io/badge/License-IPL%201.0-blue.svg)](https://opensource.org/licenses/IPL-1.0)";
+              break;
+            case 'ISC':
+                data.badge = "[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)";
+              break;
+            case 'Mozilla':
+                data.badge = "[![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)";
+              break;
+            default:
+              console.log('Select a license!');
+          }
+          
+        
         const readMePageContent = generateReadme(data);
-        fs.writeFile(`README.md`, readMePageContent, (err) =>
+        fs.writeFile(`${data.name}.md`, readMePageContent, (err) =>
         err ? console.log(err) : console.log('successfully created README.md')
         );
     });
 
-    
+  
