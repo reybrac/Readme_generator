@@ -55,7 +55,7 @@ inquirer
         {
             type: 'input',
             name: 'usage',
-            message: 'Describe usage of project'
+            message: 'Describe usage of your project'
         },
         {
             type: 'input',
