@@ -5,7 +5,7 @@ const generateReadme = (data) =>
 
 `#${data.name}
 
-${data.license} ${data.badge}
+${data.badge}
 
 ## Table of Contents
 1. [Project description](#Project-description)
